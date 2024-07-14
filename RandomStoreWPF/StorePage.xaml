@@ -1,0 +1,50 @@
+﻿<Window x:Class="RandomStoreWPF.StorePage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RandomStoreWPF"
+        mc:Ignorable="d"
+        Title="StorePage" Height="750" Width="1400">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="8*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="0" Background="LightGray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Name="BarButton" Grid.Column="0" Orientation="Horizontal" Margin="20">
+                <Button Content="Store" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" Padding="10 5"/>
+                <Button Content="Library" FontWeight="Bold" FontSize="16" VerticalAlignment="Center"  Margin="10,0, 0,0" Padding="10 5"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="20">
+                <Button Content="Profile" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" Margin="10 0" Padding="10 5" Name="Profile" Click="Profile_OnClick"/>
+                <Button Content="Logout" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" Padding="10 5" Name="Logout" Click="Logout_OnClick"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1" Margin="0 20 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <Grid Grid.Column="0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+                </ScrollViewer>
+            </Grid>
+            <Grid Grid.Column="1" Background="LightGray">
+                <StackPanel Orientation="Vertical" Margin="15" Name="GenreList">
+                    <TextBlock FontSize="24" FontWeight="Bold">Genre</TextBlock>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
