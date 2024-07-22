@@ -15,13 +15,21 @@ public partial class Game
 
     public int? GameDeveloper { get; set; }
 
-    public int? GameStatus { get; set; }
+    public bool? GameStatus { get; set; }
 
     public int? Price { get; set; }
+
+    public double? Size { get; set; }
+
+    public string? JsonDataLoc { get; set; }
+
+    public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
 
     public virtual UserTable? GameDeveloperNavigation { get; set; }
 
     public virtual GameType? GameType { get; set; }
 
-    public virtual ICollection<UserTable> Users { get; set; } = new List<UserTable>();
+    public virtual ICollection<Ownership> Ownerships { get; set; } = new List<Ownership>();
+
+    public virtual ICollection<SubGame> SubGames { get; set; } = new List<SubGame>();
 }

@@ -1,0 +1,40 @@
+﻿<Window x:Class="RandomStoreWPF.SecurityQuestionsModal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Security Questions" Height="500" Width="400"
+        MinHeight="500" MinWidth="400"
+        >
+    <StackPanel Margin="10">
+        <TextBlock VerticalAlignment="Center" TextAlignment="Center" Margin="10">Let's Set up your account security question!</TextBlock>
+        
+        <!-- Question 1 -->
+        <TextBlock Margin="5 0">Question 1</TextBlock>
+        <ComboBox x:Name="Question1ComboBox" Margin="5" DisplayMemberPath="QuestionText">
+        </ComboBox>
+        <TextBox x:Name="Answer1TextBox" Margin="5" />
+
+        <!-- Question 2 -->
+        <TextBlock Margin="5 0">Question 2</TextBlock>
+        <ComboBox x:Name="Question2ComboBox" Margin="5" DisplayMemberPath="QuestionText">
+        </ComboBox>
+        <TextBox x:Name="Answer2TextBox" Margin="5" />
+
+        <!-- Question 3 -->
+        <TextBlock Margin="5 0">Question 3</TextBlock>
+        <ComboBox x:Name="Question3ComboBox" Margin="5" DisplayMemberPath="QuestionText">
+
+        </ComboBox>
+        <TextBox x:Name="Answer3TextBox" Margin="5" />
+
+        <StackPanel Margin="5 10" >
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock>Required Complexity: </TextBlock>
+                <TextBlock Margin="10 0" x:Name="TbxComplex"/>
+            </StackPanel>
+        </StackPanel>
+        
+        <TextBlock Margin="0 5 " x:Name="ErrorTextBlock"/>
+        <!-- Submit Button -->
+        <Button Content="Submit" Click="SubmitButton_Click" Margin="5" />
+    </StackPanel>
+</Window>

@@ -5,8 +5,83 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:RandomStoreWPF"
         mc:Ignorable="d"
-        Title="Dashboard" Height="450" Width="800">
-    <Grid>
-        
+        Title="Dashboard" Height="450" Width="1200"
+        MinHeight="450" MinWidth="1200">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Button Content="&lt; Back" Grid.Row="0" HorizontalAlignment="Left" Margin="10" Click="ButtonBase_OnClick"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- DataGrid for displaying games -->
+            <DataGrid Grid.Column="0" AutoGenerateColumns="False" CanUserAddRows="True" Name="DataGridUser"
+                      IsReadOnly="True" SelectionChanged="DataGridUser_OnSelectionChanged">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*" Header="User ID" Binding="{Binding UserId}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="2*" Header="Full Name" Binding="{Binding FullName}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="Username" Binding="{Binding UserName}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="Role" Binding="{Binding Role.RoleName}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="Email" Binding="{Binding Email}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="Status" Binding="{Binding Status}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel Grid.Column="1" Margin="10">
+                <TextBlock Text="User Details" FontWeight="Bold" />
+                <!-- Game details display for both roles -->
+                <!-- Editable fields and submit button for GameDev role, hidden for Admin -->
+
+                <!-- Admin -->
+                <Grid Name="SPAdmin">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="User ID" Margin="0,5,10,0" />
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Full Name" Margin="0,5,10,0" />
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Username" Margin="0,5,10,0" />
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Role" Margin="0,5,10,0" />
+                    <TextBlock Grid.Column="0" Grid.Row="4" Text="Email" Margin="0,5,10,0" />
+                    <TextBlock Grid.Column="0" Grid.Row="5" Text="Status" Margin="0,5,10,0" />
+                    
+                    <TextBox Grid.Column="1" Grid.Row="0" Name="txtUserID" Margin="0,5,0,0" />
+                    <TextBox Grid.Column="1" Grid.Row="1" Name="txtFullName" Margin="0,5,0,0" />
+                    <TextBox Grid.Column="1" Grid.Row="2" Name="txtUsername" Margin="0,5,0,0" />
+                    <ComboBox Grid.Column="1" Grid.Row="3" Name="cmbRole" Margin="0,5,0,0" />
+                    <TextBox Grid.Column="1" Grid.Row="4" Name="txtEmail" Margin="0,5,0,0" />
+                    <StackPanel Grid.Column="1" Grid.Row="5" Margin="0,5,0,0">
+                        <RadioButton Name="rbActive" IsChecked="True">Active</RadioButton>
+                        <RadioButton Name="rbInactive">Inactive</RadioButton>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6" Margin="10" Orientation="Horizontal"
+                                VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Button Content="Edit" Margin="10 0" Padding="5" Name="BtnEdit" Click="BtnEdit_OnClick"/>
+                        <Button Content="Ban" Margin="10 0" Padding="5" Name="BtnBan" Click="BtnBan_OnClick"/>
+                        <Button Content="Delete" Margin="10 0" Padding="5" Name="BtnDelete" Click="BtnDelete_OnClick"/>
+                    </StackPanel>
+                </Grid>
+
+
+                <!-- Visibility and content dynamically adjusted based on user role -->
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

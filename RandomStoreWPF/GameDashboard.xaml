@@ -5,8 +5,122 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:RandomStoreWPF"
         mc:Ignorable="d"
-        Title="GameDashboard" Height="450" Width="800">
-    <Grid>
-        
+        Title="GameDashboard" Height="450" Width="800"
+        MinHeight="450" MinWidth="800"
+        >
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Content="&lt; Back" Grid.Row="0" HorizontalAlignment="Left" Margin="10" Click="ButtonBase_OnClick"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- DataGrid for displaying games -->
+            <DataGrid Grid.Column="0" AutoGenerateColumns="False" CanUserAddRows="True" Name="DataGridGames" IsReadOnly="True" SelectionChanged="DataGridGames_OnSelectionChanged">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="2*" Header="Game Name" Binding="{Binding GameName}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="Developer" Binding="{Binding GameDeveloperNavigation.FullName}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="Size" Binding="{Binding Size}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel Grid.Column="1" Margin="10">
+                <TextBlock Text="Game Details" FontWeight="Bold"/>
+                <!-- Game details display for both roles -->
+                <!-- Editable fields and submit button for GameDev role, hidden for Admin -->
+                
+                <!-- Game Dev -->
+                <Grid Name="SPGameDev" Visibility="Visible">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Game Name" Margin="0,5,10,0"/>
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Game Genre" Margin="0,5,10,0"/>
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Developer" Margin="0,5,10,0"/>
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Description" Margin="0,5,10,0"/>
+                    <TextBlock Grid.Column="0" Grid.Row="4" Text="Size" Margin="0,5,10,0"/>
+                    <TextBlock Grid.Column="0" Grid.Row="5" Text="Price" Margin="0,5,10,0"/>
+                    <TextBlock Grid.Column="0" Grid.Row="6" Text="Status" Margin="0,5,10,0"/>
+
+                    <TextBox Grid.Column="1" Grid.Row="0" Name="txtGameName" Margin="0,5,0,0"/>
+                    <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbGenre" Margin="0,5,0,0"/>
+                    <TextBlock Grid.Column="1" Grid.Row="2" Name="txtDeveloper" Margin="0,5,0,0"/>
+                    <TextBox Grid.Column="1" Grid.Row="3" Name="txtDescription" Height="Auto" Margin="0,5,0,0"/>
+                    <TextBox Grid.Column="1" Grid.Row="4" Name="txtSize" Margin="0,5,0,0"/>
+                    <TextBox Grid.Column="1" Grid.Row="5" Name="txtPrice" Margin="0,5,0,0"/>
+                    <ComboBox Grid.Column="1" Grid.Row="6" Name="cmbStatus" Margin="0,5,0,0">
+                        <ComboBoxItem Content="Active"/>
+                        <ComboBoxItem Content="Private (Delist)"/>
+                    </ComboBox>
+
+                    <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Margin="10" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Button Content="Edit Game" Margin="10 0" Padding="5" Name="BtnEdit" Click="BtnEdit_OnClick"/>
+                        <Button Content="Add Game" Margin="10 0" Padding="5" Name="BtnAdd" Click="BtnAdd_OnClick"/>
+                        <Button Content="Delete" Margin="10 0" Padding="5" Name="BtnDelete" Click="BtnDelete_OnClick"/>
+                    </StackPanel>
+                </Grid>
+                
+                <!-- Admin -->
+                <Grid Name="SPAdmin" Visibility="Collapsed">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Game Name" Margin="0,5,10,0"/>
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Game Genre" Margin="0,5,10,0"/>
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Developer" Margin="0,5,10,0"/>
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Description" Margin="0,5,10,0"/>
+                    <TextBlock Grid.Column="0" Grid.Row="4" Text="Size" Margin="0,5,10,0"/>
+                    <TextBlock Grid.Column="0" Grid.Row="5" Text="Price" Margin="0,5,10,0"/>
+                    <TextBlock Grid.Column="0" Grid.Row="6" Text="Status" Margin="0,5,10,0"/>
+                    
+                    <TextBlock Grid.Column="1" Grid.Row="0" Name="txtAdminGameName" Margin="0,5,0,0"/>
+                    <TextBlock Grid.Column="1" Grid.Row="1" Name="txtAdminGenre" Margin="0,5,0,0"/>
+                    <TextBlock Grid.Column="1" Grid.Row="2" Name="txtAdminDeveloper" Margin="0,5,0,0"/>
+                    <TextBlock Grid.Column="1" Grid.Row="3" Name="txtAdminDescription" Margin="0,5,0,0"/>
+                    <TextBlock Grid.Column="1" Grid.Row="4" Name="txtAdminSize" Margin="0,5,0,0"/>
+                    <TextBlock Grid.Column="1" Grid.Row="5" Name="txtAdminPrice" Margin="0,5,0,0"/>
+                    <TextBlock Grid.Column="1" Grid.Row="6" Name="txtAdminStatus" Margin="0,5,0,0"/>
+
+                    <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Margin="10" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Button Content="Change Status" Margin="10 0" Padding="5" Name="BtnDelist" Click="BtnDelist_OnClick"/>
+                        <Button Content="Delete" Margin="10 0" Padding="5" Click="BtnDelete_OnClick"/>
+                    </StackPanel>
+                </Grid>
+
+
+                <!-- Visibility and content dynamically adjusted based on user role -->
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

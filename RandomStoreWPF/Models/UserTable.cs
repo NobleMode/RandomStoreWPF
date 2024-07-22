@@ -17,9 +17,17 @@ public partial class UserTable
 
     public string? Password { get; set; }
 
+    public bool? Status { get; set; }
+
+    public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
+
     public virtual ICollection<Game> Games { get; set; } = new List<Game>();
+
+    public virtual ICollection<Ownership> Ownerships { get; set; } = new List<Ownership>();
 
     public virtual RoleTable? Role { get; set; }
 
-    public virtual ICollection<Game> GamesNavigation { get; set; } = new List<Game>();
+    public virtual ICollection<UserCode> UserCodes { get; set; } = new List<UserCode>();
+
+    public virtual ICollection<UserSecurity> UserSecurities { get; set; } = new List<UserSecurity>();
 }

@@ -3,15 +3,13 @@ using System.Collections.Generic;
 
 namespace RandomStoreWPF.Models;
 
-public partial class Cart
+public partial class UserCode
 {
     public int UserId { get; set; }
 
-    public int GameId { get; set; }
+    public string Code { get; set; } = null!;
 
-    public int CartId { get; set; }
-
-    public virtual Game Game { get; set; } = null!;
+    public bool? Downloaded { get; set; }
 
     public virtual UserTable User { get; set; } = null!;
 }

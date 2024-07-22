@@ -12,4 +12,6 @@ public partial class GameType
     public string? GameTypeDescription { get; set; }
 
     public virtual ICollection<Game> Games { get; set; } = new List<Game>();
+
+    public virtual ICollection<SubGame> SubGames { get; set; } = new List<SubGame>();
 }

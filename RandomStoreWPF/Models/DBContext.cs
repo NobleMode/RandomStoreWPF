@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace RandomStoreWPF.Models;
 
@@ -21,13 +22,25 @@ public partial class DBContext : DbContext
 
     public virtual DbSet<GameType> GameTypes { get; set; }
 
+    public virtual DbSet<Ownership> Ownerships { get; set; }
+
     public virtual DbSet<RoleTable> RoleTables { get; set; }
+
+    public virtual DbSet<SecurityQuestion> SecurityQuestions { get; set; }
+
+    public virtual DbSet<SubGame> SubGames { get; set; }
+
+    public virtual DbSet<UserCode> UserCodes { get; set; }
+
+    public virtual DbSet<UserSecurity> UserSecurities { get; set; }
 
     public virtual DbSet<UserTable> UserTables { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=LAPTOP-BNRIT7SD\\BASESERVER;Initial Catalog=randomStoreWPF; Trusted_Connection=SSPI;Encrypt=false");
+    {
+        var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        if (!optionsBuilder.IsConfigured) { optionsBuilder.UseSqlServer(config.GetConnectionString("value")); }
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -35,20 +48,25 @@ public partial class DBContext : DbContext
 
         modelBuilder.Entity<Cart>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("cart");
+            entity.HasKey(e => new { e.UserId, e.GameId }).HasName("PK__cart__564026F354A08927");
 
-            entity.Property(e => e.GameId).HasColumnName("game_id");
+            entity.ToTable("cart");
+
             entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.GameId).HasColumnName("game_id");
+            entity.Property(e => e.CartId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("cart_id");
 
-            entity.HasOne(d => d.Game).WithMany()
+            entity.HasOne(d => d.Game).WithMany(p => p.Carts)
                 .HasForeignKey(d => d.GameId)
-                .HasConstraintName("FK__cart__game_id__5CD6CB2B");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__cart__game_id__71D1E811");
 
-            entity.HasOne(d => d.User).WithMany()
+            entity.HasOne(d => d.User).WithMany(p => p.Carts)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__cart__user_id__5BE2A6F2");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__cart__user_id__70DDC3D8");
         });
 
         modelBuilder.Entity<Game>(entity =>
@@ -71,7 +89,11 @@ public partial class DBContext : DbContext
                 .HasColumnName("game_name");
             entity.Property(e => e.GameStatus).HasColumnName("game_status");
             entity.Property(e => e.GameTypeId).HasColumnName("game_type_id");
+            entity.Property(e => e.JsonDataLoc)
+                .IsUnicode(false)
+                .HasColumnName("json_data_loc");
             entity.Property(e => e.Price).HasColumnName("price");
+            entity.Property(e => e.Size).HasColumnName("size");
 
             entity.HasOne(d => d.GameDeveloperNavigation).WithMany(p => p.Games)
                 .HasForeignKey(d => d.GameDeveloper)
@@ -101,6 +123,36 @@ public partial class DBContext : DbContext
                 .HasColumnName("game_type_name");
         });
 
+        modelBuilder.Entity<Ownership>(entity =>
+        {
+            entity.HasKey(e => new { e.UserId, e.GameId }).HasName("PK__ownershi__564026F310D1438B");
+
+            entity.ToTable("ownership");
+
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.GameId).HasColumnName("game_id");
+            entity.Property(e => e.BuyDate)
+                .HasColumnType("datetime")
+                .HasColumnName("buy_date");
+            entity.Property(e => e.OwnershipId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("ownership_id");
+            entity.Property(e => e.PersonalCode)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("personal_code");
+
+            entity.HasOne(d => d.Game).WithMany(p => p.Ownerships)
+                .HasForeignKey(d => d.GameId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__ownership__game___4316F928");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Ownerships)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__ownership__user___4222D4EF");
+        });
+
         modelBuilder.Entity<RoleTable>(entity =>
         {
             entity.HasKey(e => e.RoleId).HasName("PK__role_tab__760965CC072F6A4C");
@@ -118,6 +170,85 @@ public partial class DBContext : DbContext
                 .IsUnicode(false)
                 .UseCollation("SQL_Latin1_General_CP1_CI_AS")
                 .HasColumnName("role_name");
+        });
+
+        modelBuilder.Entity<SecurityQuestion>(entity =>
+        {
+            entity.HasKey(e => e.QuestionId).HasName("PK__security__2EC2154947ACCCCD");
+
+            entity.ToTable("security_question");
+
+            entity.Property(e => e.QuestionId).HasColumnName("question_id");
+            entity.Property(e => e.QuestionText)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("question_text");
+            entity.Property(e => e.Severity).HasColumnName("severity");
+        });
+
+        modelBuilder.Entity<SubGame>(entity =>
+        {
+            entity.HasKey(e => new { e.GameId, e.SubId }).HasName("PK__sub_game__E9750FA4246D4560");
+
+            entity.ToTable("sub_game");
+
+            entity.Property(e => e.GameId).HasColumnName("game_id");
+            entity.Property(e => e.SubId).HasColumnName("sub_id");
+            entity.Property(e => e.GameTypeId).HasColumnName("game_type_id");
+            entity.Property(e => e.Price).HasColumnName("price");
+            entity.Property(e => e.Status).HasColumnName("status");
+
+            entity.HasOne(d => d.Game).WithMany(p => p.SubGames)
+                .HasForeignKey(d => d.GameId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__sub_game__game_i__0C85DE4D");
+
+            entity.HasOne(d => d.GameType).WithMany(p => p.SubGames)
+                .HasForeignKey(d => d.GameTypeId)
+                .HasConstraintName("FK__sub_game__game_t__0D7A0286");
+        });
+
+        modelBuilder.Entity<UserCode>(entity =>
+        {
+            entity.HasKey(e => new { e.UserId, e.Code }).HasName("PK__user_cod__2AE9E3C09FE190BB");
+
+            entity.ToTable("user_code");
+
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.Code)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("code");
+            entity.Property(e => e.Downloaded).HasColumnName("downloaded");
+
+            entity.HasOne(d => d.User).WithMany(p => p.UserCodes)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__user_code__user___09A971A2");
+        });
+
+        modelBuilder.Entity<UserSecurity>(entity =>
+        {
+            entity.HasKey(e => new { e.UserId, e.QuestionId }).HasName("PK__user_sec__3B52165BC61AC3AC");
+
+            entity.ToTable("user_security");
+
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.QuestionId).HasColumnName("question_id");
+            entity.Property(e => e.Answer)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("answer");
+
+            entity.HasOne(d => d.Question).WithMany(p => p.UserSecurities)
+                .HasForeignKey(d => d.QuestionId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__user_secu__quest__06CD04F7");
+
+            entity.HasOne(d => d.User).WithMany(p => p.UserSecurities)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__user_secu__user___05D8E0BE");
         });
 
         modelBuilder.Entity<UserTable>(entity =>
@@ -143,6 +274,7 @@ public partial class DBContext : DbContext
                 .UseCollation("SQL_Latin1_General_CP1_CI_AS")
                 .HasColumnName("password");
             entity.Property(e => e.RoleId).HasColumnName("role_id");
+            entity.Property(e => e.Status).HasColumnName("status");
             entity.Property(e => e.UserName)
                 .HasMaxLength(30)
                 .IsUnicode(false)
@@ -152,25 +284,6 @@ public partial class DBContext : DbContext
             entity.HasOne(d => d.Role).WithMany(p => p.UserTables)
                 .HasForeignKey(d => d.RoleId)
                 .HasConstraintName("FK__user_tabl__role___398D8EEE");
-
-            entity.HasMany(d => d.GamesNavigation).WithMany(p => p.Users)
-                .UsingEntity<Dictionary<string, object>>(
-                    "Ownership",
-                    r => r.HasOne<Game>().WithMany()
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__ownership__game___4316F928"),
-                    l => l.HasOne<UserTable>().WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__ownership__user___4222D4EF"),
-                    j =>
-                    {
-                        j.HasKey("UserId", "GameId").HasName("PK__ownershi__564026F310D1438B");
-                        j.ToTable("ownership");
-                        j.IndexerProperty<int>("UserId").HasColumnName("user_id");
-                        j.IndexerProperty<int>("GameId").HasColumnName("game_id");
-                    });
         });
 
         OnModelCreatingPartial(modelBuilder);

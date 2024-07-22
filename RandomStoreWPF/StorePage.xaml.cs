@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.EntityFrameworkCore;
 using RandomStoreWPF.Models;
 
 namespace RandomStoreWPF
@@ -66,13 +67,37 @@ namespace RandomStoreWPF
         
         private void GenerateGameCards(string genre)
         {
+            // Clear existing game cards
+            GamesGrid.Children.Clear();
+            GamesGrid.RowDefinitions.Clear();
             var games = GetGames(genre);
+            int row = 0;
+
+            for (int i = 0; i < games.Count; i += 2)
+            {
+                GamesGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                
+                var gameCardLeft = new GameCard { DataContext = games[i] };
+                Grid.SetRow(gameCardLeft, row);
+                Grid.SetColumn(gameCardLeft, 0);
+                GamesGrid.Children.Add(gameCardLeft);
+
+                if (i + 1 < games.Count)
+                {
+                    var gameCardRight = new GameCard { DataContext = games[i + 1] };
+                    Grid.SetRow(gameCardRight, row);
+                    Grid.SetColumn(gameCardRight, 1);
+                    GamesGrid.Children.Add(gameCardRight);
+                }
+
+                row++;
+            }
         }
 
         private List<String> GetRole()
         {
             using DBContext db = new DBContext();
-            string userId = UserManager.CurrentUser?.UserId ?? "1";
+            string userId = UserManager.CurrentUser?.UserId;
             
             int userRole = db.UserTables
                 .FirstOrDefault(u => u.UserId == int.Parse(userId))?.RoleId ?? 1;
@@ -131,13 +156,22 @@ namespace RandomStoreWPF
             {
                 switch (content)
                 {
-                    case "Publish":
-                        
-                        break;
                     case "Manage":
+                        if (TitleProperty.ToString() != "GameDashboard")
+                        {
+                            var managePage = new GameDashboard();
+                            managePage.Show();
+                            Close();
+                        }
                         
                         break;
                     case "Dashboard":
+                        if (TitleProperty.ToString() != "Dashboard")
+                        {
+                            var dashboardPage = new Dashboard();
+                            dashboardPage.Show();
+                            Close();
+                        }
                         
                         break;
                 }
@@ -155,21 +189,55 @@ namespace RandomStoreWPF
         private static List<Game> GetGames (string genre)
         {
             using DBContext db = new DBContext();
-            List<Game> games = genre == "ALL" ? db.Games.ToList() : db.Games.Where(g => g.GameType != null && g.GameType.GameTypeName == genre).ToList();
+            List<Game> games = genre == "ALL" ? 
+                db.Games.Include(g => g.GameType)
+                    .Include(g => g.GameDeveloperNavigation)
+                    .Where(g => g.GameStatus != false)
+                    .ToList()
+                : db.Games.Include(g => g.GameType)
+                    .Include(g => g.GameDeveloperNavigation)
+                    .Where(g => g.GameType != null && g.GameType.GameTypeName == genre)
+                    .Where(g => g.GameStatus != false)
+                    .ToList();
             return games;
         }
 
-        private void Profile_OnClick(object sender, RoutedEventArgs e)
-        {
-            // TODO - Go to profile page
-        }
-
-        private void Logout_OnClick(object sender, RoutedEventArgs e)
+        private void BtnLogout_OnClick(object sender, RoutedEventArgs e)
         {
             UserManager.ClearCurrentUser();
             var loginPage = new MainWindow();
             loginPage.Show();
             Close();
+        }
+
+        private void BtnStore_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (TitleProperty.ToString() != "Store")
+            {
+                var storePage = new StorePage();
+                storePage.Show();
+                Close();
+            }
+        }
+
+        private void BtnLib_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (TitleProperty.ToString() != "Library")
+            {
+                var libraryPage = new Library();
+                libraryPage.Show();
+                Close();
+            }
+        }
+
+        private void BtnCart_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (TitleProperty.ToString() != "Cart")
+            {
+                var cartPage = new CartPage();
+                cartPage.Show();
+                Close();
+            }
         }
     }
 }

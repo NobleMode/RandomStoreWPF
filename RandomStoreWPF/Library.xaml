@@ -5,8 +5,70 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:RandomStoreWPF"
         mc:Ignorable="d"
-        Title="Library" Height="450" Width="800">
-    <Grid>
+        Title="Library" Height="750" Width="1200"
+        MinHeight="750" MinWidth="1200"
+        >
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="8*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
         
+        <Grid Grid.Row="0" Background="LightGray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Name="BarButton" Grid.Column="0" Orientation="Horizontal" Margin="20">
+                <Button Content="Store" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" Padding="10 5" Name="BtnStore" Click="BtnStore_OnClick"/>
+                <Button Content="Library" FontWeight="Bold" FontSize="16" VerticalAlignment="Center"  Margin="10,0, 0,0" Padding="10 5" Name="BtnLib" Click="BtnLib_OnClick"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="20">
+                <Button Content="Cart" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" Padding="10 5" Name="BtnCart" Click="BtnCart_OnClick"/>
+                <Button Content="Logout" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" Padding="10 5" Name="BtnLogout" Click="BtnLogout_OnClick"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1" Margin="0 20 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <Grid Grid.Column="0">
+                <DataGrid Name="GridList" AutoGenerateColumns="False" CanUserAddRows="False" Margin="0 20 0 0" SelectionChanged="GridList_SelectionChanged" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Game.GameName}" Width="3*" />
+                        <DataGridTextColumn Header="Developer" Binding="{Binding Game.GameDeveloperNavigation.FullName}" Width="2*" />
+                        <DataGridTextColumn Header="Bought Date" Binding="{Binding BuyDate}" Width="2*" />
+                        <DataGridTextColumn Header="Size" Binding="{Binding Game.Size, StringFormat='{}{0} MB'}" Width="*" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+            
+            <Grid Grid.Column="1" Margin="0 20 0 0">
+                <StackPanel Margin="20">
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock VerticalAlignment="Center" Name="GameName" FontWeight="Bold" FontSize="20" Margin="5"/>
+                        <TextBlock VerticalAlignment="Bottom" Name="GameGenre" FontSize="16" Margin="5"/>
+                    </StackPanel>
+        
+                    <StackPanel Orientation="Horizontal" Margin="5 0">
+                        <TextBlock VerticalAlignment="Center" Name="GameDev" Margin="5 " FontSize="14"/>
+                    </StackPanel>
+        
+                    <TextBlock Name="GameDesc" Margin="10 5 150 5" FontSize="14" FontStyle="Italic" TextWrapping="Wrap"/>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock Name="GameSize" VerticalAlignment="Center" Margin=" 5" FontSize="14"/>
+                        <Button Content="Download" Margin="10,0,0,0" Padding="10 0" Name="BtnDownload" Click="BtnDownload_OnClick"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        
+        <ProgressBar Name="PBDownload" Grid.Row="2" Height="20" Margin="0 10"></ProgressBar>
     </Grid>
 </Window>
