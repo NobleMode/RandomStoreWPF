@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "F:\\Coding Space\\CSharp\\RandomStoreWPF\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7E3DDA54-4CB6-4550-9945-8CB5DEDE7986}|RandomStoreWPF\\RandomStoreWPF.csproj|f:\\coding space\\csharp\\randomstorewpf\\randomstorewpf\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7E3DDA54-4CB6-4550-9945-8CB5DEDE7986}|RandomStoreWPF\\RandomStoreWPF.csproj|solutionrelative:randomstorewpf\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7E3DDA54-4CB6-4550-9945-8CB5DEDE7986}|RandomStoreWPF\\RandomStoreWPF.csproj|f:\\coding space\\csharp\\randomstorewpf\\randomstorewpf\\storepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7E3DDA54-4CB6-4550-9945-8CB5DEDE7986}|RandomStoreWPF\\RandomStoreWPF.csproj|solutionrelative:randomstorewpf\\storepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7E3DDA54-4CB6-4550-9945-8CB5DEDE7986}|RandomStoreWPF\\RandomStoreWPF.csproj|f:\\coding space\\csharp\\randomstorewpf\\randomstorewpf\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{7E3DDA54-4CB6-4550-9945-8CB5DEDE7986}|RandomStoreWPF\\RandomStoreWPF.csproj|solutionrelative:randomstorewpf\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{7E3DDA54-4CB6-4550-9945-8CB5DEDE7986}|RandomStoreWPF\\RandomStoreWPF.csproj|f:\\coding space\\csharp\\randomstorewpf\\randomstorewpf\\storepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{7E3DDA54-4CB6-4550-9945-8CB5DEDE7986}|RandomStoreWPF\\RandomStoreWPF.csproj|solutionrelative:randomstorewpf\\storepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7E3DDA54-4CB6-4550-9945-8CB5DEDE7986}|RandomStoreWPF\\RandomStoreWPF.csproj|f:\\coding space\\csharp\\randomstorewpf\\randomstorewpf\\profile.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{7E3DDA54-4CB6-4550-9945-8CB5DEDE7986}|RandomStoreWPF\\RandomStoreWPF.csproj|solutionrelative:randomstorewpf\\profile.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,8 +22,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 230,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "StorePage.xaml.cs",
+              "DocumentMoniker": "F:\\Coding Space\\CSharp\\RandomStoreWPF\\RandomStoreWPF\\StorePage.xaml.cs",
+              "RelativeDocumentMoniker": "RandomStoreWPF\\StorePage.xaml.cs",
+              "ToolTip": "F:\\Coding Space\\CSharp\\RandomStoreWPF\\RandomStoreWPF\\StorePage.xaml.cs",
+              "RelativeToolTip": "RandomStoreWPF\\StorePage.xaml.cs",
+              "ViewState": "AQIAAGwAAAAAAAAAAAAAAAsAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-22T23:14:56.257Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
@@ -31,23 +48,17 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            }
-          ]
-        },
-        {
-          "DockedWidth": 230,
-          "SelectedChildIndex": 0,
-          "Children": [
+            },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MainWindow.xaml",
-              "DocumentMoniker": "F:\\Coding Space\\CSharp\\RandomStoreWPF\\RandomStoreWPF\\MainWindow.xaml",
-              "RelativeDocumentMoniker": "RandomStoreWPF\\MainWindow.xaml",
-              "ToolTip": "F:\\Coding Space\\CSharp\\RandomStoreWPF\\RandomStoreWPF\\MainWindow.xaml",
-              "RelativeToolTip": "RandomStoreWPF\\MainWindow.xaml",
+              "DocumentIndex": 2,
+              "Title": "Profile.xaml",
+              "DocumentMoniker": "F:\\Coding Space\\CSharp\\RandomStoreWPF\\RandomStoreWPF\\Profile.xaml",
+              "RelativeDocumentMoniker": "RandomStoreWPF\\Profile.xaml",
+              "ToolTip": "F:\\Coding Space\\CSharp\\RandomStoreWPF\\RandomStoreWPF\\Profile.xaml",
+              "RelativeToolTip": "RandomStoreWPF\\Profile.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-07-19T00:58:43.976Z",
+              "WhenOpened": "2024-07-22T23:11:21.602Z",
               "EditorCaption": ""
             }
           ]
@@ -58,15 +69,14 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "F:\\Coding Space\\CSharp\\RandomStoreWPF\\RandomStoreWPF\\MainWindow.xaml.cs",
-              "RelativeDocumentMoniker": "RandomStoreWPF\\MainWindow.xaml.cs",
-              "ToolTip": "F:\\Coding Space\\CSharp\\RandomStoreWPF\\RandomStoreWPF\\MainWindow.xaml.cs",
-              "RelativeToolTip": "RandomStoreWPF\\MainWindow.xaml.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAADQBAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T20:09:21.864Z",
+              "DocumentIndex": 1,
+              "Title": "StorePage.xaml",
+              "DocumentMoniker": "F:\\Coding Space\\CSharp\\RandomStoreWPF\\RandomStoreWPF\\StorePage.xaml",
+              "RelativeDocumentMoniker": "RandomStoreWPF\\StorePage.xaml",
+              "ToolTip": "F:\\Coding Space\\CSharp\\RandomStoreWPF\\RandomStoreWPF\\StorePage.xaml",
+              "RelativeToolTip": "RandomStoreWPF\\StorePage.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-07-22T23:10:56.74Z",
               "EditorCaption": ""
             }
           ]
