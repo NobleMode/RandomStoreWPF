@@ -30,6 +30,4 @@ public partial class Game
     public virtual GameType? GameType { get; set; }
 
     public virtual ICollection<Ownership> Ownerships { get; set; } = new List<Ownership>();
-
-    public virtual ICollection<SubGame> SubGames { get; set; } = new List<SubGame>();
 }

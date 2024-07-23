@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace RandomStoreWPF.Models;
 
@@ -28,8 +27,6 @@ public partial class DBContext : DbContext
 
     public virtual DbSet<SecurityQuestion> SecurityQuestions { get; set; }
 
-    public virtual DbSet<SubGame> SubGames { get; set; }
-
     public virtual DbSet<UserCode> UserCodes { get; set; }
 
     public virtual DbSet<UserSecurity> UserSecurities { get; set; }
@@ -37,10 +34,8 @@ public partial class DBContext : DbContext
     public virtual DbSet<UserTable> UserTables { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-        if (!optionsBuilder.IsConfigured) { optionsBuilder.UseSqlServer(config.GetConnectionString("value")); }
-    }
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=LAPTOP-BNRIT7SD\\BASESERVER;Initial Catalog=randomStoreWPF; Trusted_Connection=SSPI;Encrypt=false");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -186,43 +181,23 @@ public partial class DBContext : DbContext
             entity.Property(e => e.Severity).HasColumnName("severity");
         });
 
-        modelBuilder.Entity<SubGame>(entity =>
-        {
-            entity.HasKey(e => new { e.GameId, e.SubId }).HasName("PK__sub_game__E9750FA4246D4560");
-
-            entity.ToTable("sub_game");
-
-            entity.Property(e => e.GameId).HasColumnName("game_id");
-            entity.Property(e => e.SubId).HasColumnName("sub_id");
-            entity.Property(e => e.GameTypeId).HasColumnName("game_type_id");
-            entity.Property(e => e.Price).HasColumnName("price");
-            entity.Property(e => e.Status).HasColumnName("status");
-
-            entity.HasOne(d => d.Game).WithMany(p => p.SubGames)
-                .HasForeignKey(d => d.GameId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__sub_game__game_i__0C85DE4D");
-
-            entity.HasOne(d => d.GameType).WithMany(p => p.SubGames)
-                .HasForeignKey(d => d.GameTypeId)
-                .HasConstraintName("FK__sub_game__game_t__0D7A0286");
-        });
-
         modelBuilder.Entity<UserCode>(entity =>
         {
-            entity.HasKey(e => new { e.UserId, e.Code }).HasName("PK__user_cod__2AE9E3C09FE190BB");
+            entity.HasKey(e => e.UserId).HasName("PK__user_cod__B9BE370F43730FA6");
 
             entity.ToTable("user_code");
 
-            entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.UserId)
+                .ValueGeneratedNever()
+                .HasColumnName("user_id");
             entity.Property(e => e.Code)
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("code");
             entity.Property(e => e.Downloaded).HasColumnName("downloaded");
 
-            entity.HasOne(d => d.User).WithMany(p => p.UserCodes)
-                .HasForeignKey(d => d.UserId)
+            entity.HasOne(d => d.User).WithOne(p => p.UserCode)
+                .HasForeignKey<UserCode>(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__user_code__user___09A971A2");
         });

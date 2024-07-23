@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using System.Net.Mail;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Navigation;
@@ -11,6 +13,8 @@ namespace RandomStoreWPF;
 /// </summary>
 public partial class MainWindow : Window
 {
+    string code = "";
+
     public MainWindow()
     {
         InitializeComponent();
@@ -104,7 +108,12 @@ public partial class MainWindow : Window
             Status = true,
         };
 
-
+        if (code != TbxCode.Text)
+        {
+            TbkRegisterError.Text = "Invalid Code";
+            return;
+        }
+        
         SecurityQuestionsModal securityQuestionsModal = new SecurityQuestionsModal();
         var result = securityQuestionsModal.ShowDialog();
         if (result == true)
@@ -117,6 +126,7 @@ public partial class MainWindow : Window
                 InsertSecurityQuestions(newUser.UserId, a.q, a.a);
             }
             UserManager.SetCurrentUser(newUser.UserId.ToString(), newUser.UserName, newUser.Email);
+            MessageBox.Show("Welcome to randomStore. \n A personal code has been generated. \n Please download them from Profile Page");
             //Move to Main Page
             MoveToMain();
         }
@@ -127,6 +137,14 @@ public partial class MainWindow : Window
         if (!email.Contains("@"))
         {
             TbkRegisterError.Text = "Invalid Email";
+            return false;
+        }
+
+        using var db = new DBContext();
+        var user = db.UserTables.FirstOrDefault(u => u.Email == email);
+        if (user != null)
+        {
+            TbkRegisterError.Text = "Email already exist";
             return false;
         }
 
@@ -296,6 +314,8 @@ public partial class MainWindow : Window
         
         var user = db.UserTables.FirstOrDefault(u => u.Email == email);
         user.Password = newPass;
+        
+        db.SaveChanges();
 
         var userCode = db.UserCodes.FirstOrDefault(u => u.UserId == user.UserId);
         userCode.Code = GenerateRandomString(30);
@@ -306,5 +326,50 @@ public partial class MainWindow : Window
         MessageBox.Show("Password Changed Successfully. \n New Code has been generated. \n Please redownload them from Profile Page");
 
         MoveToMain();
+    }
+
+    private void BtnVerify_Click(object sender, RoutedEventArgs e)
+    {
+        code = GenerateRandomString(30);
+        if (string.IsNullOrWhiteSpace(TbxEmailRegister.Text))
+        {
+            TbkRegisterError.Text = "Please fill in email";
+            return;
+        }
+        
+        sendMail(TbxEmailRegister.Text, code);
+    }
+
+    private void sendMail(string recipientEmail, string code)
+    {
+        // Replace "YourEmailAddress" with your actual email address
+        MailAddress to = new MailAddress(recipientEmail);
+        // This should be your email address
+        MailAddress from = new MailAddress("noblemodemail@gmail.com");
+
+        // Set up the email message
+        MailMessage message = new MailMessage(from, to);
+        message.Subject = "Verify Code";
+        message.Body = $"Here is your verify code for randomStore game Store. \nCode: {code}";
+
+        // Set up the SMTP client
+        SmtpClient smtp = new SmtpClient
+        {
+            Host = "smtp.gmail.com", // Replace with your SMTP server address
+            Port = 587, // Common port for SMTP. Adjust as necessary.
+            Credentials = new NetworkCredential("noblemodemail@gmail.com", "L@minh12"),
+            DeliveryMethod = SmtpDeliveryMethod.Network,
+            EnableSsl = true // Most SMTP servers require SSL now.
+        };
+
+        // Send the email
+        try
+        {
+            smtp.Send(message);
+        }
+        catch (SmtpException ex)
+        {
+            Console.WriteLine($"SMTP error: {ex.Message}");
+        }
     }
 }

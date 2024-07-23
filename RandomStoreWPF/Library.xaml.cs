@@ -109,4 +109,14 @@ public partial class Library : Window
         PBDownload.Value = 99; // Ensure the progress bar shows 99%
         MessageBox.Show("Shit broke :)", "Download Almost Complete");
     }
+
+    private void BtnProfile_Click(object sender, RoutedEventArgs e)
+    {
+        if (TitleProperty.ToString() != "Profile")
+        {
+            var profile = new Profile();
+            profile.Show();
+            Close();
+        }
+    }
 }

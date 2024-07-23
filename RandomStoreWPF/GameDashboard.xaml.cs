@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
 using RandomStoreWPF.Models;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -193,6 +195,11 @@ public partial class GameDashboard : Window
         txtDeveloper.Text = game.GameDeveloperNavigation?.UserName;
         cmbStatus.SelectedItem = game.GameStatus == true ? "Active" : "Delisted";
         BtnEdit.Tag = game.GameId;
+
+        if (game.GameType?.GameTypeName == null)
+        {
+            cmbGenre.SelectedIndex = 0;
+        }
     }
     
     private void AdminList(Game game)
@@ -205,5 +212,82 @@ public partial class GameDashboard : Window
         txtAdminDescription.Text = game.GameDescription;
         txtAdminStatus.Text = game.GameStatus == true ? "Active" : "Delisted";
         BtnDelist.Tag = game.GameId;
+
+        if (game.GameType?.GameTypeName == null)
+        {
+            txtAdminGameName.Text = "";
+        }
     }
+
+    private string BrowseImageFile()
+    {
+        OpenFileDialog openFileDialog = new OpenFileDialog();
+        openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*";
+        openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+
+        if (openFileDialog.ShowDialog() == true)
+        {
+            return openFileDialog.FileName;
+        }
+
+        return null;
+    }
+
+    private string browseZipFile()
+    {
+        OpenFileDialog openFileDialog = new OpenFileDialog();
+        openFileDialog.Filter = "Zip files (*.zip)|*.zip|All files (*.*)|*.*";
+        openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+        if (openFileDialog.ShowDialog() == true)
+        {
+            return openFileDialog.FileName;
+        }
+
+        return null;
+    }
+
+    private void CopyImageToNewLocation(string sourceFilePath, string destinationDirectory)
+    {
+        try
+        {
+            // Ensure the destination directory exists
+            Directory.CreateDirectory(destinationDirectory);
+
+            // Get the file name to use in the destination directory
+            string fileName = Path.GetFileName(sourceFilePath);
+            string destinationFilePath = Path.Combine(destinationDirectory, fileName);
+
+            // Copy the file
+            File.Copy(sourceFilePath, destinationFilePath, true); // true allows overwriting
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error copying image: {ex.Message}");
+        }
+    }
+
+    private void BtnUploadAndCopyImage_Click(object sender, RoutedEventArgs e)
+    {
+        string sourceImagePath = BrowseImageFile();
+        if (!string.IsNullOrEmpty(sourceImagePath))
+        {
+            // Specify the directory where you want to copy the image
+            string destinationDirectory = @"C:\path\to\your\destination\directory";
+            CopyImageToNewLocation(sourceImagePath, destinationDirectory);
+        }
+    }
+
+    private void BtnUploadAndCopyZip_Click(object sender, RoutedEventArgs e)
+    {
+        string sourceZipPath = browseZipFile();
+        if (!string.IsNullOrEmpty(sourceZipPath))
+        {
+            // Specify the directory where you want to copy the zip file
+            string destinationDirectory = @"C:\path\to\your\destination\directory";
+            CopyImageToNewLocation(sourceZipPath, destinationDirectory);
+        }
+    }
+
 }

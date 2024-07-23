@@ -27,7 +27,7 @@ public partial class UserTable
 
     public virtual RoleTable? Role { get; set; }
 
-    public virtual ICollection<UserCode> UserCodes { get; set; } = new List<UserCode>();
+    public virtual UserCode? UserCode { get; set; }
 
     public virtual ICollection<UserSecurity> UserSecurities { get; set; } = new List<UserSecurity>();
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RandomStoreWPF"
         mc:Ignorable="d"
-        Title="StorePage" Height="750" Width="1400"
+        Title="Store" Height="Auto" Width="1400"
         MinHeight="750" MinWidth="1400"
         >
     <Grid Margin="20">

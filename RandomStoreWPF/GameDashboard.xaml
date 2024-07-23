@@ -23,8 +23,9 @@
             <!-- DataGrid for displaying games -->
             <DataGrid Grid.Column="0" AutoGenerateColumns="False" CanUserAddRows="True" Name="DataGridGames" IsReadOnly="True" SelectionChanged="DataGridGames_OnSelectionChanged">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Width="2*" Header="Game Name" Binding="{Binding GameName}"></DataGridTextColumn>
-                    <DataGridTextColumn Width="*" Header="Developer" Binding="{Binding GameDeveloperNavigation.FullName}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="Game Id" Binding="{Binding GameId}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="3*" Header="Game Name" Binding="{Binding GameName}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="2*" Header="Developer" Binding="{Binding GameDeveloperNavigation.FullName}"></DataGridTextColumn>
                     <DataGridTextColumn Width="*" Header="Size" Binding="{Binding Size}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
@@ -50,15 +51,19 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Column="0" Grid.Row="0" Text="Game Name" Margin="0,5,10,0"/>
-                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Game Genre" Margin="0,5,10,0"/>
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Game Type" Margin="0,5,10,0"/>
                     <TextBlock Grid.Column="0" Grid.Row="2" Text="Developer" Margin="0,5,10,0"/>
                     <TextBlock Grid.Column="0" Grid.Row="3" Text="Description" Margin="0,5,10,0"/>
                     <TextBlock Grid.Column="0" Grid.Row="4" Text="Size" Margin="0,5,10,0"/>
                     <TextBlock Grid.Column="0" Grid.Row="5" Text="Price" Margin="0,5,10,0"/>
                     <TextBlock Grid.Column="0" Grid.Row="6" Text="Status" Margin="0,5,10,0"/>
+                    <!--<TextBlock Grid.Column="0" Grid.Row="7" Text="Thumbnail" Margin="0,5,10,0"/>-->
+                    <!--<TextBlock Grid.Column="0" Grid.Row="8" Text="Game" Margin="0,5,10,0"/>-->
 
                     <TextBox Grid.Column="1" Grid.Row="0" Name="txtGameName" Margin="0,5,0,0"/>
                     <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbGenre" Margin="0,5,0,0"/>
@@ -70,8 +75,10 @@
                         <ComboBoxItem Content="Active"/>
                         <ComboBoxItem Content="Private (Delist)"/>
                     </ComboBox>
+                    <!--<Button Grid.Column="1" Grid.Row="7" Content="Upload Image" Click="BtnUploadAndCopyImage_Click" HorizontalAlignment="Left"/>-->
+                    <!--<Button Grid.Column="1" Grid.Row="8" Content="Upload Game" Click="BtnUploadAndCopyImage_Click" HorizontalAlignment="Left"/>-->
 
-                    <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Margin="10" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="9" Margin="10" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Button Content="Edit Game" Margin="10 0" Padding="5" Name="BtnEdit" Click="BtnEdit_OnClick"/>
                         <Button Content="Add Game" Margin="10 0" Padding="5" Name="BtnAdd" Click="BtnAdd_OnClick"/>
                         <Button Content="Delete" Margin="10 0" Padding="5" Name="BtnDelete" Click="BtnDelete_OnClick"/>
@@ -93,6 +100,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
@@ -103,7 +111,7 @@
                     <TextBlock Grid.Column="0" Grid.Row="4" Text="Size" Margin="0,5,10,0"/>
                     <TextBlock Grid.Column="0" Grid.Row="5" Text="Price" Margin="0,5,10,0"/>
                     <TextBlock Grid.Column="0" Grid.Row="6" Text="Status" Margin="0,5,10,0"/>
-                    
+
                     <TextBlock Grid.Column="1" Grid.Row="0" Name="txtAdminGameName" Margin="0,5,0,0"/>
                     <TextBlock Grid.Column="1" Grid.Row="1" Name="txtAdminGenre" Margin="0,5,0,0"/>
                     <TextBlock Grid.Column="1" Grid.Row="2" Name="txtAdminDeveloper" Margin="0,5,0,0"/>
@@ -112,7 +120,7 @@
                     <TextBlock Grid.Column="1" Grid.Row="5" Name="txtAdminPrice" Margin="0,5,0,0"/>
                     <TextBlock Grid.Column="1" Grid.Row="6" Name="txtAdminStatus" Margin="0,5,0,0"/>
 
-                    <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Margin="10" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="8" Margin="10" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Button Content="Change Status" Margin="10 0" Padding="5" Name="BtnDelist" Click="BtnDelist_OnClick"/>
                         <Button Content="Delete" Margin="10 0" Padding="5" Click="BtnDelete_OnClick"/>
                     </StackPanel>

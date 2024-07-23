@@ -16,6 +16,7 @@
       </PackageReference>
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+      <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -26,6 +27,7 @@
 
     <ItemGroup>
       <Folder Include="Game\Template\Images\" />
+      <Folder Include="Export\" />
     </ItemGroup>
 
     <ItemGroup>

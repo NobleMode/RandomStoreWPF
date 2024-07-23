@@ -85,6 +85,12 @@
                             <TextBox Name="TbxPassRegister" Margin="0 5"></TextBox>
                             <TextBlock Text="Retype Password"></TextBlock>
                             <TextBox Name="TbxSamePassRegister" Margin="0 5"></TextBox>
+
+                            <TextBlock Text="Verify Email"></TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox Name="TbxCode" Width="188"></TextBox>
+                                <Button Name="BtnVerify" Content="Get Code" Click="BtnVerify_Click"></Button>
+                            </StackPanel>
                         </StackPanel>
 
                         <TextBlock Name="TbkRegisterError" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Foreground="Red"></TextBlock>
